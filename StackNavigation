@@ -1,0 +1,26 @@
+import React from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+import HomeScreen from "../screens/HomeScreen";
+import CadastroScreen from "../screens/CadastroScreen";
+
+const { Navigator, Screen } = createNativeStackNavigator();
+
+const StackNavigation = () => {
+  return (
+    <Navigator initialRouteName="Home">
+      <Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ headerTitle: "Tela Inicial" }}
+      />
+      <Screen
+        name="Cadastro"
+        component={CadastroScreen}
+        options={{ headerTitle: "Cadastro de Itens" }}
+      />
+    </Navigator>
+  );
+};
+
+export default StackNavigation;

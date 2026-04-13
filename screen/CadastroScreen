@@ -1,0 +1,66 @@
+import React, { useState, useCallback } from "react";
+import { View, Text, FlatList, Alert, StyleSheet } from "react-native";
+
+import Input from "../components/Input";
+import Button from "../components/Button";
+
+const CadastroScreen = () => {
+  const [nome, setNome] = useState("");
+  const [itens, setItens] = useState([]);
+
+  const handleAdd = useCallback(() => {
+    if (!nome.trim()) {
+      Alert.alert("Erro", "O nome é obrigatório");
+      return;
+    }
+
+    const item = {
+      id: Date.now().toString(),
+      nome
+    };
+
+    setItens(prev => [...prev, item]);
+    setNome("");
+  }, [nome]);
+
+  const renderItem = ({ item }) => (
+    <Text style={styles.itemText}>{item.nome}</Text>
+  );
+
+  return (
+    <View style={styles.wrapper}>
+      <Text style={styles.heading}>Cadastro de Itens</Text>
+
+      <Input
+        placeholder="Digite um nome"
+        value={nome}
+        onChangeText={setNome}
+      />
+
+      <Button title="Cadastrar" onPress={handleAdd} />
+
+      <FlatList
+        data={itens}
+        keyExtractor={(item) => item.id}
+        renderItem={renderItem}
+      />
+    </View>
+  );
+};
+
+export default CadastroScreen;
+
+const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    padding: 20
+  },
+  heading: {
+    fontSize: 22,
+    marginBottom: 12
+  },
+  itemText: {
+    fontSize: 18,
+    marginTop: 8
+  }
+});
